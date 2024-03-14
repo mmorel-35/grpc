@@ -1,0 +1,65 @@
+module(
+    name = "grpc",
+    version = "1.62.1",
+    repo_name = "com_github_grpc_grpc",
+)
+
+bazel_dep(
+    name = "abseil-cpp",
+    version = "20240116.1",
+    repo_name = "com_google_absl",
+)
+bazel_dep(
+    name = "bazel_skylib",
+    version = "1.0.3",
+)
+bazel_dep(
+    name = "re2",
+    version = "2023-06-02",
+    repo_name = "com_googlesource_code_re2",
+)
+bazel_dep(
+    name = "rules_apple",
+    version = "3.1.1",
+    repo_name = "build_bazel_rules_apple",
+)
+bazel_dep(
+    name = "rules_cc",
+    version = "0.0.9",
+)
+bazel_dep(
+    name = "rules_java",
+    version = "6.0.0",
+)
+bazel_dep(
+    name = "rules_pkg",
+    version = "0.7.0",
+)
+bazel_dep(
+    name = "rules_proto",
+    version = "5.3.0-21.7",
+)
+bazel_dep(
+    name = "rules_python",
+    version = "0.26.0",
+)
+# -- bazel_dep definitions -- #
+
+grpc_repo_deps_ext = use_extension("//bazel:grpc_deps.bzl", "grpc_repo_deps_ext")
+use_repo(
+    grpc_repo_deps_ext,
+    "boringssl",
+    "com_envoyproxy_protoc_gen_validate",
+    "com_github_cares_cares",
+    "com_github_cncf_xds",
+    "com_google_googleapis",
+    "com_google_protobuf",
+    "envoy_api",
+    "io_bazel_rules_go",
+    "io_opencensus_cpp",
+    "io_opentelemetry_cpp",
+    "zlib",
+)
+
+grpc_extra_deps_ext = use_extension("//bazel:grpc_extra_deps.bzl", "grpc_extra_deps_ext")
+use_repo(grpc_extra_deps_ext, "com_google_googleapis_imports")

@@ -63,6 +63,14 @@ def grpc_extra_deps(ignore_version_differences = False):
 
     apple_support_dependencies()
 
+    googleapis_deps()
+
+    google_cloud_cpp_deps()
+
+    py_repositories()
+
+
+def googleapis_deps():
     # Initialize Google APIs with only C++ and Python targets
     switched_rules_by_language(
         name = "com_google_googleapis_imports",
@@ -71,6 +79,4 @@ def grpc_extra_deps(ignore_version_differences = False):
         python = True,
     )
 
-    google_cloud_cpp_deps()
-
-    py_repositories()
+grpc_extra_deps_ext = module_extension(implementation = lambda ctx: googleapis_deps())

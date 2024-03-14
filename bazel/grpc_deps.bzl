@@ -17,7 +17,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@com_github_grpc_grpc//bazel:grpc_python_deps.bzl", "grpc_python_deps")
 
 # buildifier: disable=unnamed-macro
-def grpc_deps():
+def grpc_bind_deps():
     """Loads dependencies need to compile and test the grpc library."""
 
     native.bind(
@@ -225,6 +225,7 @@ def grpc_deps():
         actual = "@com_google_googleapis//google/logging/v2:logging_cc_proto",
     )
 
+def grpc_repo_deps():
     if "platforms" not in native.existing_rules():
         http_archive(
             name = "platforms",
@@ -536,6 +537,11 @@ def grpc_deps():
             ],
         )
 
+grpc_repo_deps_ext = module_extension(implementation = lambda ctx: grpc_repo_deps())
+
+def grpc_deps():
+    grpc_bind_deps()
+    grpc_repo_deps()
     grpc_python_deps()
 
 # TODO: move some dependencies from "grpc_deps" here?
